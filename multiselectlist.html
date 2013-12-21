@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!-- sarath -->
+<!-- Created on 21 Dec 2013 -->
+<!-- http://github.com/saratonite -->
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>
+		
+	</title>
+<meta name="chromesniffer" id="chromesniffer_meta" content="{&quot;jQuery&quot;:&quot;1.10.2&quot;}"><script type="text/javascript" src="chrome-extension://homgcnaoacgigpkkljjjekpignblkeae/detector.js"></script></head>
+<body style="" cz-shortcut-listen="true">
+<script type="text/javascript" src="./multiselect_files/jquery.js"></script>
+<select id="level1" size="5"><option class="level1-opt" value="3" data-catid="3">Agriculture</option><option class="level1-opt" value="6" data-catid="6">Apparel &amp; Clothing</option><option class="level1-opt" value="7" data-catid="7">Automobiles</option><option class="level1-opt" value="8" data-catid="8">Business Services</option><option class="level1-opt" value="9" data-catid="9">Electrical &amp; Electronics</option><option class="level1-opt" value="25" data-catid="25">Energy</option><option class="level1-opt" value="26" data-catid="26">Computer</option><option class="level1-opt" value="29" data-catid="29">Energy</option><option class="level1-opt" value="30" data-catid="30">Computer</option></select>
+<select id="level2" size="5" style="display: inline-block;"><option value="17" class="level2-opt" data-catid="17">Cars</option><option value="18" class="level2-opt" data-catid="18">Bikes</option></select>
+<select id="level3" size="5" style="display: inline-block;"><option value="19" class="level2-opt" data-catid="19">Hatch back</option><option value="20" class="level2-opt" data-catid="20">SUV</option></select>
+<select id="level4" size="5" style="display: inline-block;"><option value="23" class="level2-opt" data-catid="23">ddasddasd</option><option value="24" class="level2-opt" data-catid="24">dfdfdhsfhfbh</option></select>
+
+<script type="text/javascript">
+	var cats=[{"category_id":"3","category_name":"Agriculture","category_parent_id":"0"},{"category_id":"6","category_name":"Apparel & Clothing","category_parent_id":"0"},{"category_id":"7","category_name":"Automobiles","category_parent_id":"0"},{"category_id":"8","category_name":"Business Services","category_parent_id":"0"},{"category_id":"9","category_name":"Electrical & Electronics","category_parent_id":"0"},{"category_id":"10","category_name":"Food","category_parent_id":"3"},{"category_id":"11","category_name":"Noodles","category_parent_id":"10"},{"category_id":"12","category_name":"Bread","category_parent_id":"10"},{"category_id":"13","category_name":"Fruits","category_parent_id":"3"},{"category_id":"14","category_name":"Chinese noodles","category_parent_id":"11"},{"category_id":"15","category_name":"Thai noodles","category_parent_id":"11"},{"category_id":"16","category_name":"Web site ","category_parent_id":"8"},{"category_id":"17","category_name":"Cars","category_parent_id":"7"},{"category_id":"18","category_name":"Bikes","category_parent_id":"7"},{"category_id":"19","category_name":"Hatch back","category_parent_id":"17"},{"category_id":"20","category_name":"SUV","category_parent_id":"17"},{"category_id":"23","category_name":"ddasddasd","category_parent_id":"20"},{"category_id":"24","category_name":"dfdfdhsfhfbh","category_parent_id":"20"},{"category_id":"25","category_name":"Energy","category_parent_id":"0"},{"category_id":"26","category_name":"Computer","category_parent_id":"0"},{"category_id":"29","category_name":"Energy","category_parent_id":"0"},{"category_id":"30","category_name":"Computer","category_parent_id":"0"}];
+
+
+		
+$(document).ready(function(){
+
+	//Level 1
+	var level1_data="";
+	for(i=0;i<cats.length;i++){
+		if(cats[i].category_parent_id==0){
+			//console.log(cats[i].category_name);
+			level1_data=level1_data+'<option class="level1-opt" value="'+cats[i].category_id+'" data-catid="'+cats[i].category_id+'">'+cats[i].category_name+'</option>';
+		}
+		
+	}
+	$("#level1").html(level1_data);
+	//
+	 $("#level2").hide();
+	 $("#level3").hide();
+	 $("#level4").hide();
+	//
+
+	//Level 2
+
+	$('#level1').click(function(){
+	var level1_parent=$(this).val();
+	console.log(level1_parent);
+		no_of_l2=0;
+			var level2_data="";
+			for(ia=0;ia<cats.length;ia++){
+				if(cats[ia].category_parent_id==level1_parent){
+					level2_data=level2_data+'<option value="'+cats[ia].category_id+'"  class="level2-opt" data-catid="'+cats[ia].category_id+'">'+cats[ia].category_name+'</option>';
+					no_of_l2++;
+				}
+			}
+			level2_data=$.parseHTML(level2_data);
+			$("#level2").html(level2_data);
+		//
+		console.log("No of items"+no_of_l2);
+		if(no_of_l2==0){
+		$("#level2").hide();	
+		}else{
+			$("#level2").show();
+		}
+		$("#level3").hide();
+		$("#level4").hide();
+		
+	});
+
+	//
+
+	//Level 3
+	$("#level2").click(function(){
+		var level2_parent=$(this).val();
+
+		no_of_l3=0;
+		var level3_data="";
+			for(ib=0;ib<cats.length;ib++){
+				if(cats[ib].category_parent_id==level2_parent){
+					level3_data=level3_data+'<option value="'+cats[ib].category_id+'"  class="level2-opt" data-catid="'+cats[ib].category_id+'">'+cats[ib].category_name+'</option>';
+					no_of_l3++;
+				}
+			}
+			level3_data=$.parseHTML(level3_data);
+			$("#level3").html(level3_data);
+		//
+		console.log("No of leve 3:"+no_of_l3);
+		if(no_of_l3>0){
+		$("#level3").show();	
+		}else{$("#level3").hide()}
+		$("#level4").hide();
+		
+	});
+	//
+
+	$("#level3").click(function(){
+		var level3_parent=$(this).val();
+		no_of_l4=0;
+		var level4_data="";
+			for(ic=0;ic<cats.length;ic++){
+				if(cats[ic].category_parent_id==level3_parent){
+					level4_data=level4_data+'<option value="'+cats[ic].category_id+'"  class="level2-opt" data-catid="'+cats[ic].category_id+'">'+cats[ic].category_name+'</option>';
+					no_of_l4++;
+				}
+			}
+			level4_data=$.parseHTML(level4_data);
+			$("#level4").html(level4_data);
+		//
+		if(no_of_l4>0){
+			$("#level4").show();	
+		}else{$("#level4").hide();}
+		
+	});
+
+});
+
+</script>
+
+</body></html>
